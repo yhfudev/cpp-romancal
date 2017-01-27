@@ -259,6 +259,7 @@ START_TEST (test_value2roman_overflow)
     PAIR(453, "");
 #undef PAIR
     ck_assert_int_eq(-1, value2roman(351, NULL, sizeof(buf)));
+    ck_assert_int_eq(-1, value2roman(351, NULL, 0));
     ck_assert_int_eq(-2, value2roman(351, buf, 0));
     ck_assert_int_eq(-2, value2roman(351, buf, 1));
     ck_assert_int_eq(-2, value2roman(351, buf, 2));
@@ -394,18 +395,21 @@ START_TEST (test_romadd_overflow)
 
     ck_assert_int_eq( 0, roman_add(NULL, NULL, buf, sizeof(buf))); ck_assert_str_eq(buf, "");
     ck_assert_int_eq(-1, roman_add(NULL, NULL, NULL, sizeof(buf)));
+    ck_assert_int_eq(-1, roman_add(NULL, NULL, NULL, 0));
     ck_assert_int_eq(-2, roman_add(NULL, NULL, buf, 0));
     ck_assert_int_eq( 0, roman_add(NULL, NULL, buf, 1));
     ck_assert_int_eq( 0, roman_add(NULL, NULL, buf, 2));
 
     ck_assert_int_eq( 0, roman_sub(NULL, NULL, buf, sizeof(buf))); ck_assert_str_eq(buf, "");
     ck_assert_int_eq(-1, roman_sub(NULL, NULL, NULL, sizeof(buf)));
+    ck_assert_int_eq(-1, roman_sub(NULL, NULL, NULL, 0));
     ck_assert_int_eq(-2, roman_sub(NULL, NULL, buf, 0));
     ck_assert_int_eq( 0, roman_sub(NULL, NULL, buf, 1));
     ck_assert_int_eq( 0, roman_sub(NULL, NULL, buf, 2));
 
     ck_assert_int_eq( 0, roman_mul(NULL, NULL, buf, sizeof(buf))); ck_assert_str_eq(buf, "");
     ck_assert_int_eq(-1, roman_mul(NULL, NULL, NULL, sizeof(buf)));
+    ck_assert_int_eq(-1, roman_mul(NULL, NULL, NULL, 0));
     ck_assert_int_eq(-2, roman_mul(NULL, NULL, buf, 0));
     ck_assert_int_eq( 0, roman_mul(NULL, NULL, buf, 1));
     ck_assert_int_eq( 0, roman_mul(NULL, NULL, buf, 2));
@@ -457,12 +461,12 @@ value2roman_suite(void)
     tcase_add_test(tc_add, test_romadd_multi1);
     suite_add_tcase(s, tc_add);
 
-    tc_add = tcase_create("roman add overflow");
-    tcase_add_test(tc_add, test_romadd_overflow);
-    suite_add_tcase(s, tc_add);
-
     tc_add = tcase_create("roman add multiple numbers 2");
     tcase_add_test(tc_add, test_romadd_multi2);
+    suite_add_tcase(s, tc_add);
+
+    tc_add = tcase_create("roman add overflow");
+    tcase_add_test(tc_add, test_romadd_overflow);
     suite_add_tcase(s, tc_add);
 
     tc_sub = tcase_create("roman sub");
