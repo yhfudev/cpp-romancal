@@ -86,6 +86,16 @@ START_TEST (test_romadd_basic)
 }
 END_TEST
 
+START_TEST (test_romsub_basic)
+{
+    char buf[10];
+    memset(buf, 0, sizeof(buf));
+#define ROP_SUB(r1, r2, rr) roman_sub ( r1, r2, buf, sizeof(buf)); ck_assert_str_eq(buf, rr);
+    ROP_SUB ( "V", "I", "IV");
+    ROP_SUB ( "X", "V", "V");
+}
+END_TEST
+
 static Suite *
 value2roman_suite(void)
 {
@@ -93,6 +103,7 @@ value2roman_suite(void)
     TCase * tc_v2r;
     TCase * tc_r2v;
     TCase * tc_add;
+    TCase * tc_sub;
 
     s = suite_create("Roman Number Calculator");
 
@@ -120,6 +131,10 @@ value2roman_suite(void)
     tc_add = tcase_create("roman add");
     tcase_add_test(tc_add, test_romadd_basic);
     suite_add_tcase(s, tc_add);
+
+    tc_sub = tcase_create("roman sub");
+    tcase_add_test(tc_sub, test_romadd_basic);
+    suite_add_tcase(s, tc_sub);
 
     return s;
 }
