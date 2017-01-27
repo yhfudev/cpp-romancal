@@ -117,6 +117,11 @@ value2roman(unsigned long value, char * romanstr, size_t maxlen)
 int
 roman_add (const char * roman1, const char * roman2, char * roman_ret, size_t maxlen)
 {
-    return -1;
+    unsigned long val1;
+    unsigned long val2;
+    val1 = roman2value(roman1);
+    val2 = roman2value(roman2);
+    TRACE ("romadd %lu + %lu = %lu", val1, val2, val1 + val2);
+    return value2roman (val1 + val2, roman_ret, maxlen);
 }
 
