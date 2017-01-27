@@ -43,6 +43,9 @@ main(int argc, char * argv[])
     case '-':
         roman_sub(argv[1], argv[3], buf, sizeof(buf));
         break;
+    case '*':
+        roman_mul(argv[1], argv[3], buf, sizeof(buf));
+        break;
     default:
         fprintf(stderr, "Error: unknown op: '%c'!\n", op);
         break;
