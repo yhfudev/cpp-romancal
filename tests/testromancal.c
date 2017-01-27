@@ -16,6 +16,7 @@
 START_TEST (test_roman2value_basic)
 {
 #define PAIR(val,str) ck_assert_int_eq(val, roman2value(str));
+    PAIR(0, "");
     PAIRS();
 #undef PAIR
 }
@@ -24,6 +25,7 @@ END_TEST
 START_TEST (test_roman2value_long)
 {
 #define PAIR(val,str) ck_assert_int_eq(val, roman2value(str))
+    PAIR(0, "");
     PAIR(351, "CCCLI");
     PAIR(453, "CDLIII");
     PAIR(1453, "MCDLIII");
@@ -39,6 +41,7 @@ START_TEST (test_value2roman_basic)
     char buf[10];
     memset(buf, 0, sizeof(buf));
 #define PAIR(val,str) value2roman(val, buf, sizeof(buf)); ck_assert_str_eq(buf, str);
+    PAIR(0, "");
     PAIRS();
 #undef PAIR
 }
