@@ -74,12 +74,25 @@ START_TEST (test_value2roman_overflow)
 }
 END_TEST
 
+START_TEST (test_romadd_basic)
+{
+    char buf[10];
+    memset(buf, 0, sizeof(buf));
+#define ROP_ADD(r1, r2, rr) roman_add ( r1, r2, buf, sizeof(buf)); ck_assert_str_eq(buf, rr);
+    ROP_ADD ( "V", "I", "VI");
+    ROP_ADD ( "X", "V", "XV");
+    ROP_ADD ( "XIV", "LX", "LXXIV");
+    ROP_ADD ( "XX", "II", "XXII");
+}
+END_TEST
+
 static Suite *
 value2roman_suite(void)
 {
     Suite * s;
     TCase * tc_v2r;
     TCase * tc_r2v;
+    TCase * tc_add;
 
     s = suite_create("Roman Number Calculator");
 
@@ -103,6 +116,10 @@ value2roman_suite(void)
     tc_r2v = tcase_create("roman2value long");
     tcase_add_test(tc_r2v, test_roman2value_long);
     suite_add_tcase(s, tc_r2v);
+
+    tc_add = tcase_create("roman add");
+    tcase_add_test(tc_add, test_romadd_basic);
+    suite_add_tcase(s, tc_add);
 
     return s;
 }

@@ -27,11 +27,24 @@ usage(const char *progname)
 int
 main(int argc, char * argv[])
 {
+    char op;
+    char buf[250];
     if (argc != 4) {
         fprintf(stderr, "Error: argument number should be 3!\n");
         usage(argv[0]);
         exit (1);
     }
-    return -1;
+    memset(buf, 0, sizeof(buf));
+    op = argv[2][0];
+    switch (op) {
+    case '+':
+        roman_add(argv[1], argv[3], buf, sizeof(buf));
+        break;
+    default:
+        fprintf(stderr, "Error: unknown op: '%c'!\n", op);
+        break;
+    }
+    fprintf(stdout, "%s\n", buf);
+    return 0;
 }
 

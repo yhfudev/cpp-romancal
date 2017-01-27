@@ -39,5 +39,7 @@ extern unsigned long roman2value(const char * romanstr);
 
 extern int value2roman(unsigned long value, char * romanstr, size_t maxlen);
 
+int roman_add (const char * roman1, const char * roman2, char * roman_ret, size_t maxlen);
+
 #endif // _ROMANCAL_H
 
