@@ -50,6 +50,7 @@ fi
 make ChangeLog
 
 make
+make check
 #make -C doc/latex/
 make dist-gzip
 

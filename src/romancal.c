@@ -10,6 +10,11 @@
 
 #include "romancal.h"
 
+typedef struct _roman_map_str_t {
+    int val;
+    const char * str;
+} roman_map_str_t;
+
 /**
  * @brief Convert a value to a Roman number string
  *
@@ -24,6 +29,21 @@
 int
 value2roman(unsigned long value, char * romanstr, size_t maxlen)
 {
-    return -1;
+    int i;
+    unsigned long div;
+    roman_map_str_t map[] = {
+#define PAIR(val,str) {val, str},
+        PAIRS()
+#undef PAIR
+    };
+    romanstr[0] = 0;
+    for (i = NUM_ARRAY(map); i > 0 && value > 0; i --) {
+        div = value / map[i - 1].val;
+        value %= map[i - 1].val;
+        for ( ; div > 0; div --) {
+            strcat (romanstr, map[i - 1].str);
+        }
+    }
+    return 0;
 }
 
