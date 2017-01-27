@@ -264,6 +264,91 @@ START_TEST (test_romadd_basic)
 }
 END_TEST
 
+#define BUF_MAX 20
+START_TEST (test_romadd_multi1)
+{
+    char *tmp;
+    char *p1;
+    char *p2;
+    char buf1[BUF_MAX];
+    char buf2[BUF_MAX];
+    memset(buf1, 0, sizeof(buf1));
+    memset(buf2, 0, sizeof(buf2));
+    p1 = buf1;
+    p2 = buf2;
+    strcpy (p1, "CCXXXII"); // 232
+    ck_assert_int_eq (roman2value(p1), 232);
+    p2[0] = 0;
+    ck_assert_int_eq (roman2value("CCCCXIII"), 413);
+    roman_add ( p1, "CCCCXIII", p2, BUF_MAX); // 232 + 413
+    ck_assert_int_eq (roman2value(p2), 232 + 413);
+    tmp = p1; p1 = p2; p2 = tmp; // swap
+    p2[0] = 0;
+    ck_assert_int_eq (roman2value("MCCXXXI"), 1231);
+    roman_add ( p1, "MCCXXXI", p2, BUF_MAX); // + 1231
+    ck_assert_int_eq (roman2value(p2), 232 + 413 + 1231);
+    tmp = p1; p1 = p2; p2 = tmp; // swap
+    p2[0] = 0;
+    ck_assert_int_eq (roman2value("MDCCCLII"), 1852);
+    roman_add ( p1, "MDCCCLII", p2, BUF_MAX); // + 1852
+    ck_assert_int_eq (roman2value(p2), 232 + 413 + 1231 + 1852);
+    ck_assert_int_eq (roman2value(p2), 3728);
+    ck_assert_str_eq (p2, "MMMDCCXXVIII");
+}
+END_TEST
+
+START_TEST (test_romadd_multi2)
+{
+    char *tmp;
+    char *p1;
+    char *p2;
+    char buf1[BUF_MAX];
+    char buf2[BUF_MAX];
+    memset(buf1, 0, sizeof(buf1));
+    memset(buf2, 0, sizeof(buf2));
+    p1 = buf1;
+    p2 = buf2;
+    strcpy (p1, "XVII"); // 17
+    ck_assert_int_eq (roman2value(p1), 17);
+    p2[0] = 0;
+    ck_assert_int_eq (roman2value("CCII"), 202);
+    roman_add ( p1, "CCII", p2, BUF_MAX);
+    ck_assert_int_eq (roman2value(p2), 17 + 202);
+    tmp = p1; p1 = p2; p2 = tmp; // swap
+    p2[0] = 0;
+    ck_assert_int_eq (roman2value("XXXIX"), 39);
+    roman_add ( p1, "XXXIX", p2, BUF_MAX); // + 39
+    ck_assert_int_eq (roman2value(p2), 17 + 202 + 39);
+    tmp = p1; p1 = p2; p2 = tmp; // swap
+    p2[0] = 0;
+    ck_assert_int_eq (roman2value("LI"), 51);
+    roman_add ( p1, "LI", p2, BUF_MAX); // + 51
+    ck_assert_int_eq (roman2value(p2), 17 + 202 + 39 + 51);
+    tmp = p1; p1 = p2; p2 = tmp; // swap
+    p2[0] = 0;
+    ck_assert_int_eq (roman2value("LXX"), 70);
+    roman_add ( p1, "LXX", p2, BUF_MAX); // + 70
+    ck_assert_int_eq (roman2value(p2), 17 + 202 + 39 + 51 + 70);
+    tmp = p1; p1 = p2; p2 = tmp; // swap
+    p2[0] = 0;
+    ck_assert_int_eq (roman2value("XCII"), 92);
+    roman_add ( p1, "XCII", p2, BUF_MAX); // + 92
+    ck_assert_int_eq (roman2value(p2), 17 + 202 + 39 + 51 + 70 + 92);
+    tmp = p1; p1 = p2; p2 = tmp; // swap
+    p2[0] = 0;
+    ck_assert_int_eq (roman2value("XLV"), 45);
+    roman_add ( p1, "XLV", p2, BUF_MAX); // + 45
+    ck_assert_int_eq (roman2value(p2), 17 + 202 + 39 + 51 + 70 + 92 + 45);
+    tmp = p1; p1 = p2; p2 = tmp; // swap
+    p2[0] = 0;
+    ck_assert_int_eq (roman2value("LXXXVII"), 87);
+    roman_add ( p1, "LXXXVII", p2, BUF_MAX); // + 87
+    ck_assert_int_eq (roman2value(p2), 17 + 202 + 39 + 51 + 70 + 92 + 45 + 87);
+    ck_assert_int_eq (roman2value(p2), 603);
+    ck_assert_str_eq (p2, "DCIII");
+}
+END_TEST
+
 START_TEST (test_romsub_basic)
 {
     char buf[10];
@@ -319,6 +404,14 @@ value2roman_suite(void)
 
     tc_add = tcase_create("roman add");
     tcase_add_test(tc_add, test_romadd_basic);
+    suite_add_tcase(s, tc_add);
+
+    tc_add = tcase_create("roman add multiple numbers 1");
+    tcase_add_test(tc_add, test_romadd_multi1);
+    suite_add_tcase(s, tc_add);
+
+    tc_add = tcase_create("roman add multiple numbers 2");
+    tcase_add_test(tc_add, test_romadd_multi2);
     suite_add_tcase(s, tc_add);
 
     tc_sub = tcase_create("roman sub");
