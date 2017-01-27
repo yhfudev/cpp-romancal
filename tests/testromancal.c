@@ -202,9 +202,11 @@
 START_TEST (test_roman2value_basic)
 {
 #define PAIR(val,str) ck_assert_int_eq(val, roman2value(str));
+    PAIR(0, NULL);
     PAIR(0, "");
     ROMANPAIRS_BASE();
 #undef PAIR
+
 }
 END_TEST
 
@@ -216,6 +218,13 @@ START_TEST (test_roman2value_long)
 #undef PAIR
 }
 END_TEST
+
+START_TEST (test_roman2value_overflow)
+{
+    ck_assert_int_eq(0, roman2value(NULL));
+}
+END_TEST
+
 
 START_TEST (test_value2roman_basic)
 {
@@ -245,10 +254,18 @@ START_TEST (test_value2roman_overflow)
 {
     char buf[10];
     memset(buf, 0, sizeof(buf));
-#define PAIR(val,str) value2roman(val, buf, 5); ck_assert_str_eq(buf, str);
+#define PAIR(val,str) value2roman(val, buf, 6); ck_assert_str_eq(buf, str);
     PAIR(351, "CCCLI");
     PAIR(453, "");
 #undef PAIR
+    ck_assert_int_eq(-1, value2roman(351, NULL, sizeof(buf)));
+    ck_assert_int_eq(-2, value2roman(351, buf, 0));
+    ck_assert_int_eq(-2, value2roman(351, buf, 1));
+    ck_assert_int_eq(-2, value2roman(351, buf, 2));
+    ck_assert_int_eq(-2, value2roman(351, buf, 3));
+    ck_assert_int_eq(-2, value2roman(351, buf, 4));
+    ck_assert_int_eq(-2, value2roman(351, buf, 5));
+    ck_assert_int_eq( 0, value2roman(351, buf, 6));
 }
 END_TEST
 
@@ -369,6 +386,32 @@ START_TEST (test_rommul_basic)
 }
 END_TEST
 
+/* test buffer overflow */
+START_TEST (test_romadd_overflow)
+{
+    char buf[10];
+    memset(buf, 0, sizeof(buf));
+
+    ck_assert_int_eq( 0, roman_add(NULL, NULL, buf, sizeof(buf))); ck_assert_str_eq(buf, "");
+    ck_assert_int_eq(-1, roman_add(NULL, NULL, NULL, sizeof(buf)));
+    ck_assert_int_eq(-2, roman_add(NULL, NULL, buf, 0));
+    ck_assert_int_eq( 0, roman_add(NULL, NULL, buf, 1));
+    ck_assert_int_eq( 0, roman_add(NULL, NULL, buf, 2));
+
+    ck_assert_int_eq( 0, roman_sub(NULL, NULL, buf, sizeof(buf))); ck_assert_str_eq(buf, "");
+    ck_assert_int_eq(-1, roman_sub(NULL, NULL, NULL, sizeof(buf)));
+    ck_assert_int_eq(-2, roman_sub(NULL, NULL, buf, 0));
+    ck_assert_int_eq( 0, roman_sub(NULL, NULL, buf, 1));
+    ck_assert_int_eq( 0, roman_sub(NULL, NULL, buf, 2));
+
+    ck_assert_int_eq( 0, roman_mul(NULL, NULL, buf, sizeof(buf))); ck_assert_str_eq(buf, "");
+    ck_assert_int_eq(-1, roman_mul(NULL, NULL, NULL, sizeof(buf)));
+    ck_assert_int_eq(-2, roman_mul(NULL, NULL, buf, 0));
+    ck_assert_int_eq( 0, roman_mul(NULL, NULL, buf, 1));
+    ck_assert_int_eq( 0, roman_mul(NULL, NULL, buf, 2));
+}
+END_TEST
+
 static Suite *
 value2roman_suite(void)
 {
@@ -402,12 +445,20 @@ value2roman_suite(void)
     tcase_add_test(tc_r2v, test_roman2value_long);
     suite_add_tcase(s, tc_r2v);
 
+    tc_r2v = tcase_create("roman2value overflow");
+    tcase_add_test(tc_r2v, test_roman2value_overflow);
+    suite_add_tcase(s, tc_r2v);
+
     tc_add = tcase_create("roman add");
     tcase_add_test(tc_add, test_romadd_basic);
     suite_add_tcase(s, tc_add);
 
     tc_add = tcase_create("roman add multiple numbers 1");
     tcase_add_test(tc_add, test_romadd_multi1);
+    suite_add_tcase(s, tc_add);
+
+    tc_add = tcase_create("roman add overflow");
+    tcase_add_test(tc_add, test_romadd_overflow);
     suite_add_tcase(s, tc_add);
 
     tc_add = tcase_create("roman add multiple numbers 2");
