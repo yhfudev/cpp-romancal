@@ -10,6 +10,25 @@
 
 #include "romancal.h"
 
+#define PAIRS0() \
+    PAIR(   1,  'I') \
+    PAIR(   5,  'V') \
+    PAIR(  10,  'X') \
+    PAIR(  50,  'L') \
+    PAIR( 100,  'C') \
+    PAIR( 500,  'D') \
+    PAIR(1000,  'M') \
+
+static
+r2v(const char ch)
+{
+    switch (ch) {
+#define PAIR(val,chr) case chr: return val;
+        PAIRS0()
+    }
+    return 0;
+}
+
 /**
  * @brief Convert a Roman number string to value
  *
@@ -22,7 +41,24 @@
 unsigned long
 roman2value(const char * romanstr)
 {
-    return 0;
+    size_t i;
+    size_t max;
+    unsigned long retval = 0;
+    max = strlen(romanstr);
+    for (i = 0; i < max; i ++) {
+        if (i == 0) {
+            retval += r2v(romanstr[i]);
+        } else {
+            if (r2v(romanstr[i - 1]) < r2v(romanstr[i])) {
+                retval -= r2v(romanstr[i - 1]);
+                retval -= r2v(romanstr[i - 1]);
+                retval += r2v(romanstr[i]);
+            } else {
+                retval += r2v(romanstr[i]);
+            }
+        }
+    }
+    return retval;
 }
 
 typedef struct _roman_map_str_t {
