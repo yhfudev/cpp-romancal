@@ -2,10 +2,19 @@
 AM_LDFLAGS=
 AM_CFLAGS=
 
+if DEBUG
+# use "valgrind --tool=memcheck --leak-check=yes" to check memory leak, MemWatch will drag the program.
+#DEFS+=-DMEMWATCH=1
+DEFS+=-DDEBUG=1
+AM_CFLAGS+=-g -Wall
+
+else
+AM_CFLAGS+=-O3 -Wall
+endif
+
 AM_CFLAGS+= \
     -I$(top_srcdir)/src \
     -I$(top_builddir)/include/ \
-    #-I../../check-0.11.0/ \
     $(NULL)
 
 AM_LDFLAGS += \

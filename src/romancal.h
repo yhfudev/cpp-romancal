@@ -30,13 +30,12 @@
 
 #if DEBUG
 #include <stdio.h> // stderr
-#define TRACE(fmt, ...) fprintf (stderr, "[%s()]" fmt " {ln:%d}\n", __func__, ##__VA_ARGS__, __LINE__)
+#define TRACE(fmt, ...) fprintf (stderr, "[%s()] " fmt " {ln:%d}\n", __func__, ##__VA_ARGS__, __LINE__)
 #else
 #define TRACE(...)
 #endif
 
 extern unsigned long roman2value(const char * romanstr);
-
 extern int value2roman(unsigned long value, char * romanstr, size_t maxlen);
 
 int roman_add (const char * roman1, const char * roman2, char * roman_ret, size_t maxlen);
