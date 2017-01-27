@@ -15,6 +15,26 @@
 
 START_TEST (test_value2roman_basic)
 {
+    char buf[10];
+    memset(buf, 0, sizeof(buf));
+#define PAIR(val,str) value2roman(val, buf, sizeof(buf)); ck_assert_str_eq(buf, str);
+    PAIRS();
+#undef PAIR
+}
+END_TEST
+
+START_TEST (test_value2roman_long)
+{
+    char buf[10];
+    memset(buf, 0, sizeof(buf));
+#define PAIR(val,str) value2roman(val, buf, sizeof(buf)); ck_assert_str_eq(buf, str)
+    PAIR(351, "CCCLI");
+    PAIR(453, "CDLIII");
+    PAIR(1453, "MCDLIII");
+    PAIR(2000, "MM");
+    PAIR(3000, "MMM");
+    PAIR(4931, "MMMMCMXXXI");
+#undef PAIR
 }
 END_TEST
 
@@ -30,6 +50,10 @@ value2roman_suite(void)
     /* test case */
     tc_v2r = tcase_create("value2roman");
     tcase_add_test(tc_v2r, test_value2roman_basic);
+    suite_add_tcase(s, tc_v2r);
+
+    tc_v2r = tcase_create("value2roman long");
+    tcase_add_test(tc_v2r, test_value2roman_long);
     suite_add_tcase(s, tc_v2r);
 
     return s;

@@ -11,6 +11,21 @@
 
 #include <stddef.h> // size_t
 
+#define PAIRS() \
+    PAIR(   1,  "I") \
+    PAIR(   4, "IV") \
+    PAIR(   5,  "V") \
+    PAIR(   9, "IX") \
+    PAIR(  10,  "X") \
+    PAIR(  40, "XL") \
+    PAIR(  50,  "L") \
+    PAIR(  90, "XC") \
+    PAIR( 100,  "C") \
+    PAIR( 400, "CD") \
+    PAIR( 500,  "D") \
+    PAIR( 900, "CM") \
+    PAIR(1000,  "M") \
+
 #define NUM_ARRAY(a) (sizeof(a)/sizeof(a[0]))
 
 #if DEBUG
