@@ -92,6 +92,10 @@ value2roman(unsigned long value, char * romanstr, size_t maxlen)
         div = value / map[i - 1].val;
         value %= map[i - 1].val;
         for ( ; div > 0; div --) {
+            if (strlen(romanstr) + strlen(map[i - 1].str) > maxlen) {
+                romanstr[0] = 0;
+                return -1;
+            }
             strcat (romanstr, map[i - 1].str);
         }
     }
