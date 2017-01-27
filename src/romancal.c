@@ -19,12 +19,13 @@
     PAIR( 500,  'D') \
     PAIR(1000,  'M') \
 
-static
+static unsigned long
 r2v(const char ch)
 {
     switch (ch) {
 #define PAIR(val,chr) case chr: return val;
         PAIRS0()
+#undef PAIR
     }
     return 0;
 }
