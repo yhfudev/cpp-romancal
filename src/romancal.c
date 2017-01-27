@@ -84,7 +84,7 @@ value2roman(unsigned long value, char * romanstr, size_t maxlen)
     unsigned long div;
     roman_map_str_t map[] = {
 #define PAIR(val,str) {val, str},
-        PAIRS()
+        ROMANPAIRS_BASE()
 #undef PAIR
     };
     romanstr[0] = 0;

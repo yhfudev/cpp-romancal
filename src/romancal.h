@@ -11,7 +11,7 @@
 
 #include <stddef.h> // size_t
 
-#define PAIRS() \
+#define ROMANPAIRS_BASE() \
     PAIR(   1,  "I") \
     PAIR(   4, "IV") \
     PAIR(   5,  "V") \
