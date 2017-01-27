@@ -50,16 +50,9 @@ roman2value(const char * romanstr)
     }
     max = strlen(romanstr);
     for (i = 0; i < max; i ++) {
-        if (i == 0) {
-            retval += r2v(romanstr[i]);
-        } else {
-            if (r2v(romanstr[i - 1]) < r2v(romanstr[i])) {
-                retval -= r2v(romanstr[i - 1]);
-                retval -= r2v(romanstr[i - 1]);
-                retval += r2v(romanstr[i]);
-            } else {
-                retval += r2v(romanstr[i]);
-            }
+        retval += r2v(romanstr[i]);
+        if ((i > 0) && (r2v(romanstr[i - 1]) < r2v(romanstr[i]))) {
+            retval -= (r2v(romanstr[i - 1]) << 1);
         }
     }
     return retval;
