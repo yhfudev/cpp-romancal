@@ -35,6 +35,8 @@
 #define TRACE(...)
 #endif
 
+extern unsigned long roman2value(const char * romanstr);
+
 extern int value2roman(unsigned long value, char * romanstr, size_t maxlen);
 
 #endif // _ROMANCAL_H

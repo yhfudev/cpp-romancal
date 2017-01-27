@@ -10,6 +10,21 @@
 
 #include "romancal.h"
 
+/**
+ * @brief Convert a Roman number string to value
+ *
+ * @param romanstr : the C string of a Roman number
+ *
+ * @return the value
+ *
+ * Convert the Roman number string to value
+ */
+unsigned long
+roman2value(const char * romanstr)
+{
+    return 0;
+}
+
 typedef struct _roman_map_str_t {
     int val;
     const char * str;

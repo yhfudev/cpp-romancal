@@ -13,6 +13,27 @@
 
 #include "romancal.h"
 
+START_TEST (test_roman2value_basic)
+{
+#define PAIR(val,str) ck_assert_int_eq(val, roman2value(str));
+    PAIRS();
+#undef PAIR
+}
+END_TEST
+
+START_TEST (test_roman2value_long)
+{
+#define PAIR(val,str) ck_assert_int_eq(val, roman2value(str))
+    PAIR(351, "CCCLI");
+    PAIR(453, "CDLIII");
+    PAIR(1453, "MCDLIII");
+    PAIR(2000, "MM");
+    PAIR(3000, "MMM");
+    PAIR(4931, "MMMMCMXXXI");
+#undef PAIR
+}
+END_TEST
+
 START_TEST (test_value2roman_basic)
 {
     char buf[10];
@@ -55,6 +76,14 @@ value2roman_suite(void)
     tc_v2r = tcase_create("value2roman long");
     tcase_add_test(tc_v2r, test_value2roman_long);
     suite_add_tcase(s, tc_v2r);
+
+    tc_r2v = tcase_create("roman2value");
+    tcase_add_test(tc_r2v, test_roman2value_basic);
+    suite_add_tcase(s, tc_r2v);
+
+    tc_r2v = tcase_create("roman2value long");
+    tcase_add_test(tc_r2v, test_roman2value_long);
+    suite_add_tcase(s, tc_r2v);
 
     return s;
 }
