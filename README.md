@@ -29,11 +29,11 @@ The command line format is
 where 'left' and 'right' are the Roman numbers, and 'op' is one of '+', '-', '*'.
 
 
-RUN TEST
---------
+RUN TESTS
+---------
 
 Run the command to test the Roman Number library:
 
-    ./tests/testromancal
+    make check
 
 

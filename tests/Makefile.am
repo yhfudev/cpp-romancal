@@ -20,7 +20,9 @@ AM_LDFLAGS += $(LIBCHECK_LDFLAGS)
 AM_CFLAGS += $(LIBCOMPAT_CFLAGS)
 AM_LDFLAGS += $(LIBCOMPAT_LDFLAGS)
 
-bin_PROGRAMS=testromancal
+TESTS=testromancal
+
+check_PROGRAMS=testromancal
 
 testromancal_SOURCES= \
     ../src/romancal.c \
