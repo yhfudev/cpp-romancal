@@ -44,6 +44,9 @@ roman2value(const char * romanstr)
     size_t i;
     size_t max;
     unsigned long retval = 0;
+    if (NULL == romanstr) {
+        return 0;
+    }
     max = strlen(romanstr);
     for (i = 0; i < max; i ++) {
         if (i == 0) {
@@ -73,7 +76,7 @@ typedef struct _roman_map_str_t {
  * @param romanstr : the C string of a Roman number
  * @param maxlen : the buffer size of the string
  *
- * @return 0 on success, other error
+ * @return 0 on success, -1 on NULL buffer, -2 on not enough buffer size
  *
  * Convert a value to a Roman number string
  */
@@ -87,14 +90,20 @@ value2roman(unsigned long value, char * romanstr, size_t maxlen)
         ROMANPAIRS_BASE()
 #undef PAIR
     };
+    if (NULL == romanstr) {
+        return -1;
+    }
+    if (maxlen < 1) {
+        return -2;
+    }
     romanstr[0] = 0;
     for (i = NUM_ARRAY(map); i > 0 && value > 0; i --) {
         div = value / map[i - 1].val;
         value %= map[i - 1].val;
         for ( ; div > 0; div --) {
-            if (strlen(romanstr) + strlen(map[i - 1].str) > maxlen) {
+            if (strlen(romanstr) + strlen(map[i - 1].str) >= maxlen) {
                 romanstr[0] = 0;
-                return -1;
+                return -2;
             }
             strcat (romanstr, map[i - 1].str);
         }
@@ -110,7 +119,7 @@ value2roman(unsigned long value, char * romanstr, size_t maxlen)
  * @param roman1 : the adding result of C string of a Roman number
  * @param maxlen : the buffer size of the string
  *
- * @return 0 on success, other error
+ * @return 0 on success, -1 on NULL buffer, -2 on not enough buffer size
  *
  * Convert a value to a Roman number string
  */
@@ -133,7 +142,7 @@ roman_add (const char * roman1, const char * roman2, char * roman_ret, size_t ma
  * @param roman1 : the adding result of C string of a Roman number
  * @param maxlen : the buffer size of the string
  *
- * @return 0 on success, other error
+ * @return 0 on success, -1 on NULL buffer, -2 on not enough buffer size
  *
  * Convert a value to a Roman number string
  */
@@ -156,7 +165,7 @@ roman_sub (const char * roman1, const char * roman2, char * roman_ret, size_t ma
  * @param roman1 : the adding result of C string of a Roman number
  * @param maxlen : the buffer size of the string
  *
- * @return 0 on success, other error
+ * @return 0 on success, -1 on NULL buffer, -2 on not enough buffer size
  *
  * Convert a value to a Roman number string
  */
