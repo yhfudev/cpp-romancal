@@ -62,6 +62,18 @@ START_TEST (test_value2roman_long)
 }
 END_TEST
 
+/* test buffer overflow */
+START_TEST (test_value2roman_overflow)
+{
+    char buf[10];
+    memset(buf, 0, sizeof(buf));
+#define PAIR(val,str) value2roman(val, buf, 5); ck_assert_str_eq(buf, str)
+    PAIR(351, "CCCLI");
+    PAIR(453, "");
+#undef PAIR
+}
+END_TEST
+
 static Suite *
 value2roman_suite(void)
 {
@@ -78,6 +90,10 @@ value2roman_suite(void)
 
     tc_v2r = tcase_create("value2roman long");
     tcase_add_test(tc_v2r, test_value2roman_long);
+    suite_add_tcase(s, tc_v2r);
+
+    tc_v2r = tcase_create("value2roman overflow");
+    tcase_add_test(tc_v2r, test_value2roman_overflow);
     suite_add_tcase(s, tc_v2r);
 
     tc_r2v = tcase_create("roman2value");
