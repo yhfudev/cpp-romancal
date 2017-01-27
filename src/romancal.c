@@ -163,6 +163,10 @@ roman_sub (const char * roman1, const char * roman2, char * roman_ret, size_t ma
 int
 roman_mul (const char * roman1, const char * roman2, char * roman_ret, size_t maxlen)
 {
-    return 0;
+    unsigned long val1;
+    unsigned long val2;
+    val1 = roman2value(roman1);
+    val2 = roman2value(roman2);
+    TRACE ("rommul %lu * %lu = %lu", val1, val2, val1 * val2);
+    return value2roman (val1 * val2, roman_ret, maxlen);
 }
-
