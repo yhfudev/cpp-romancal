@@ -1,4 +1,5 @@
-SUBDIRS= src tests
+SUBDIRS= src tests doc
+
 
 EXTRA_DIST=autogen.sh autoclean.sh AUTHORS README.md ChangeLog
 

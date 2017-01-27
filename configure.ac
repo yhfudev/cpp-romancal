@@ -105,6 +105,8 @@ AC_TYPE_SIZE_T
 # Checks for library functions.
 
 AC_CONFIG_FILES([Makefile
+                 doc/Makefile
+                 doc/Doxyfile
                  src/Makefile
                  tests/Makefile])
 AC_OUTPUT
