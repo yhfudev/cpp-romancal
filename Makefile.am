@@ -1,9 +1,15 @@
 SUBDIRS= src tests doc
 
+#DOC_FILES= \
+#    $(top_srcdir)/doc/attrtype.htm \
+#    $(NULL)
 
-EXTRA_DIST=autogen.sh autoclean.sh AUTHORS README.md ChangeLog
 
-ChangeLog:
+EXTRA_DIST=autogen.sh autoclean.sh AUTHORS README.md ChangeLog \
+    $(DOC_FILES) \
+    $(NULL)
+
+ChangeLog: .git
 	if test -d $(srcdir)/.git; then                         \
 	  if test -f $(srcdir)/.last-cl-gen; then               \
         git log --no-merges --date-order --date=short       \
