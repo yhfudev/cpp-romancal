@@ -27,6 +27,7 @@ usage(const char *progname)
 int
 main(int argc, char * argv[])
 {
+    int ret = -1;
     char op;
     char buf[250];
     if (argc != 4) {
@@ -38,19 +39,20 @@ main(int argc, char * argv[])
     op = argv[2][0];
     switch (op) {
     case '+':
-        roman_add(argv[1], argv[3], buf, sizeof(buf));
+        ret = roman_add(argv[1], argv[3], buf, sizeof(buf));
         break;
     case '-':
-        roman_sub(argv[1], argv[3], buf, sizeof(buf));
-        break;
-    case '*':
-        roman_mul(argv[1], argv[3], buf, sizeof(buf));
+        ret = roman_sub(argv[1], argv[3], buf, sizeof(buf));
         break;
     default:
         fprintf(stderr, "Error: unknown op: '%c'!\n", op);
         break;
     }
-    fprintf(stdout, "%s\n", buf);
+    if (ret < 0) {
+        fprintf(stderr, "Error: in calculation!\n");
+    } else {
+        fprintf(stdout, "%s\n", buf);
+    }
     return 0;
 }
 
