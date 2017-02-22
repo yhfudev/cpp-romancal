@@ -1,6 +1,7 @@
 
 AM_LDFLAGS=
 AM_CFLAGS=
+EXTRA_DIST=
 
 if DEBUG
 # use "valgrind --tool=memcheck --leak-check=yes" to check memory leak, MemWatch will drag the program.
@@ -21,16 +22,44 @@ AM_LDFLAGS += \
     -L$(top_builddir)/src/ \
     $(NULL)
 
-EXTRA_DIST=romancal.h
+DEFS+= \
+    `getconf LFS_CFLAGS` \
+    `getconf LFS64_CFLAGS` \
+    -D_GNU_SOURCE \
+    -D_FILE_OFFSET_BITS=64 \
+    -DHAVE_MMAP64=1 \
+    $(NULL)
+
+libromancal_la_LDFLAGS=
+libromancal_la_CPPFLAGS=
+
+include_HEADERS = \
+    $(top_srcdir)/src/romancal.h \
+    $(NULL)
+
+EXTRA_DIST += libromancal.pc.in
+
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = libromancal.pc
+
+#BUILT_SOURCES = $(top_builddir)/src/xmllex.c
+#CLEANFILES = $(top_builddir)/src/xmllex.c
+#nodist_program_SOURCES = $(top_builddir)/src/xmllex.c
+#$(top_builddir)/src/xmllex.c: $(top_srcdir)/src/xmllex.l $(top_srcdir)/src/xmldecl.h
+#	$(LEX) -o $@ $(top_srcdir)/src/xmllex.l
+
+lib_LTLIBRARIES=libromancal.la
+libromancal_la_SOURCES= \
+    romancal.c \
+    $(NULL)
 
 bin_PROGRAMS=romancal
 
 romancal_SOURCES= \
-    romancal.c \
     main.c \
     $(NULL)
 
-#romancal_LDADD = -lm
+romancal_LDADD = -lm -lromancal
 
 romancal_CFLAGS = $(AM_CFLAGS)
 romancal_LDFLAGS = $(AM_LDFLAGS)

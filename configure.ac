@@ -108,5 +108,6 @@ AC_CONFIG_FILES([Makefile
                  doc/Makefile
                  doc/Doxyfile
                  src/Makefile
+                 src/libromancal.pc
                  tests/Makefile])
 AC_OUTPUT
