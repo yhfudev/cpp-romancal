@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h> // exit()
 #include <string.h> // memset()
+#include <libgen.h> // basename()
 
 #include <getopt.h>
 

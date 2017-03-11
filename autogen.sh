@@ -49,8 +49,8 @@ fi
 #make clean
 make ChangeLog
 
-make
-make check
+#make
+#make check
 #make -C doc/latex/
 make dist-gzip
 

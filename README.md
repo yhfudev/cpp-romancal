@@ -3,6 +3,9 @@ RomanCal
 
 A Roman number calculator
 
+This is a example project to setup a C/C++ project with autoconf/automake, static/dynamic library, unit test, [continuous integration](http://docs.platformio.org/en/stable/ci/index.html), doxygen doc etc.
+
+
 COMPILING
 ---------
 

@@ -1,7 +1,7 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_PREREQ([2.69])
+AC_PREREQ([2.60])
 AC_INIT(romancal, 0.1, yhfudev@gmail.com)
 AC_CONFIG_SRCDIR([src/main.c])
 AC_CONFIG_HEADERS([config.h])
@@ -14,13 +14,17 @@ SED=sed
 # Checks for programs.
 AC_PROG_AWK
 AC_PROG_CC
+AC_PROG_CPP
 AC_PROG_CXX
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
+AC_PROG_RANLIB
 
 # Checks for libraries.
 LT_INIT([shared static])
+
+AC_CHECK_LIB([m], [main])
 
 # FIXME: Replace `main' with a function in `-llibcompat':
 #AC_CHECK_LIB([compat], [ck_do_nothing])
@@ -105,6 +109,7 @@ AC_CHECK_HEADERS([stddef.h stdlib.h string.h])
 AC_TYPE_SIZE_T
 
 # Checks for library functions.
+AC_CHECK_FUNCS([memset])
 
 AC_CONFIG_FILES([Makefile
                  doc/Makefile
