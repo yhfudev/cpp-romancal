@@ -45,6 +45,8 @@ install:
   #- ps: Start-FileDownload "https://github.com/libcheck/check/releases/download/0.11.0/check-0.11.0.tar.gz"
   #- ps: Start-FileDownload "https://github.com/philsquared/Catch/releases/download/v1.8.1/catch.hpp"
   - appveyor DownloadFile "https://github.com/libcheck/check/releases/download/0.11.0/check-0.11.0.tar.gz" -FileName C:\cygwin\check-0.11.0.tar.gz
+  - if defined BASH (%BASH% -lc "pwd")
+  - if defined BASH (%BASH% -lc "echo c:\\list\\\\")
   - if defined BASH (%BASH% -lc "tar -xvf C:\cygwin\check-0.11.0.tar.gz -C C:\cygwin\")
   - appveyor DownloadFile "https://github.com/philsquared/Catch/releases/download/v1.8.1/catch.hpp" -FileName C:\cygwin\catch.hpp
 
