@@ -1,6 +1,7 @@
 
 AM_LDFLAGS=
 AM_CFLAGS=
+AM_CPPFLAGS=
 
 if DEBUG
 # use "valgrind --tool=memcheck --leak-check=yes" to check memory leak, MemWatch will drag the program.
@@ -17,6 +18,8 @@ AM_CFLAGS+= \
     -I$(top_srcdir)/include/ \
     -I$(top_builddir)/include/ \
     $(NULL)
+
+AM_CPPFLAGS+= $(AM_CFLAGS)
 
 AM_LDFLAGS += \
     -L$(top_builddir)/src/ \
