@@ -14,7 +14,8 @@ AM_CFLAGS+=-O3 -Werror# -Wall
 endif
 
 AM_CFLAGS+= \
-    -I$(top_srcdir)/src \
+    -I$(top_srcdir)/src/ \
+    -I$(top_srcdir)/include/ \
     -I$(top_builddir)/include/ \
     $(NULL)
 
@@ -34,7 +35,7 @@ libromancal_la_LDFLAGS=
 libromancal_la_CPPFLAGS=
 
 include_HEADERS = \
-    $(top_srcdir)/src/romancal.h \
+    $(top_srcdir)/include/romancal.h \
     $(NULL)
 
 EXTRA_DIST += libromancal.pc.in

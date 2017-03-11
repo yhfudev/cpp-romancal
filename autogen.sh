@@ -35,7 +35,7 @@ autoreconf -f -i -Wall,no-obsolete
 
 (cd ../check-0.11.0/; make clean ; ./configure --enable-shared=no --enable-static=yes; make clean; make; cd -)
 
-if [ 1 = 1 ]; then
+if [ 0 = 1 ]; then
     LIBCOMPAT_CFLAGS="-I$(pwd)/../check-0.11.0/lib/" \
     LIBCOMPAT_LIBS="-L$(pwd)/../check-0.11.0/lib/" \
     LIBCHECK_CFLAGS="-I$(pwd)/../check-0.11.0/ -I$(pwd)/../check-0.11.0/src/" \
@@ -43,7 +43,7 @@ if [ 1 = 1 ]; then
         ./configure --enable-static --enable-debug
 else
     #./configure --enable-static --enable-shared --disable-debug --with-libcheck=$(pwd)/../check-0.11.0/
-    ./configure --enable-static --enable-debug --with-libcheck=$(pwd)/../check-0.11.0/
+    ./configure --enable-static --disable-shared --enable-debug --with-libcheck=$(pwd)/../check-0.11.0/
 fi
 
 #make clean

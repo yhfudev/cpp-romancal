@@ -11,6 +11,8 @@
 #include <stdlib.h> // exit()
 #include <string.h> // memset()
 
+#include <getopt.h>
+
 #include "romancal.h"
 
 void
@@ -30,19 +32,47 @@ main(int argc, char * argv[])
     int ret = -1;
     char op;
     char buf[250];
-    if (argc != 4) {
+    char *show = (char *)"";
+
+    int c;
+    struct option longopts[]  = {
+        { "show",         1, 0, 's' },
+
+        { "help",         0, 0, 'h' },
+        { "verbose",      0, 0, 'v' },
+        { 0,              0, 0,  0  },
+    };
+
+    while ((c = getopt_long( argc, argv, "s:vh", longopts, NULL )) != EOF) {
+        switch (c) {
+        case 's':
+            show = optarg;
+            break;
+        case 'h':
+            usage (argv[0]);
+            exit (0);
+            break;
+        default:
+            fprintf (stderr, "Unknown parameter: '%c'.\n", c);
+            fprintf (stderr, "Use '%s -h' for more information.\n", basename(argv[0]));
+            exit (-1);
+            break;
+        }
+    }
+
+    if (argc - optind != 3) {
         fprintf(stderr, "Error: argument number should be 3!\n");
         usage(argv[0]);
         exit (1);
     }
     memset(buf, 0, sizeof(buf));
-    op = argv[2][0];
+    op = argv[optind + 1][0];
     switch (op) {
     case '+':
-        ret = roman_add(argv[1], argv[3], buf, sizeof(buf));
+        ret = roman_add(argv[optind], argv[optind + 2], buf, sizeof(buf));
         break;
     case '-':
-        ret = roman_sub(argv[1], argv[3], buf, sizeof(buf));
+        ret = roman_sub(argv[optind], argv[optind + 2], buf, sizeof(buf));
         break;
     default:
         fprintf(stderr, "Error: unknown op: '%c'!\n", op);
@@ -51,7 +81,7 @@ main(int argc, char * argv[])
     if (ret < 0) {
         fprintf(stderr, "Error: in calculation!\n");
     } else {
-        fprintf(stdout, "%s\n", buf);
+        fprintf(stdout, "%s%s\n", show, buf);
     }
     return 0;
 }

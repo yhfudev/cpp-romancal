@@ -14,10 +14,10 @@ SED=sed
 # Checks for programs.
 AC_PROG_AWK
 AC_PROG_CC
+AC_PROG_CXX
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
-AC_PROG_RANLIB
 
 # Checks for libraries.
 LT_INIT([shared static])
@@ -35,12 +35,14 @@ fi
 if test "x$have_libcheck" = "xyes"; then
   LIBCHECK_LIBS+=" -lcheck"
 fi
+AM_CONDITIONAL([USE_CI_CHECK], [test $have_libcheck = "yes"])
 
 AC_ARG_WITH([libcheck],
     [AS_HELP_STRING([--with-libcheck=prefix],
         [try this for a non-standard install prefix of the Check library])],
     [LIBCHECKPATHSET=1],
     [LIBCHECKPATHSET=0])
+AM_CONDITIONAL([USE_CI_CHECK], [test $LIBCHECKPATHSET = 1])
 if test $LIBCHECKPATHSET = 1 ; then
   CFLAGS="$CFLAGS -I$with_libcheck/ -I$with_libcheck/src/ -I$with_libcheck/lib/"
   LDFLAGS="$LDFLAGS -L$with_libcheck/src/ -L$with_libcheck/lib/"

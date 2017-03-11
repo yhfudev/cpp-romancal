@@ -178,3 +178,4 @@ roman_sub (const char * roman1, const char * roman2, char * roman_ret, size_t ma
     TRACE ("romsub %lu - %lu = %lu", val1, val2, val1 - val2);
     return value2roman (val1 - val2, roman_ret, maxlen);
 }
+
