@@ -40,9 +40,17 @@ install:
   # it is necessary to upgrade the MSYS base files and after that all the packages
   # the 2 separate commands/lines are required because a new shell is necessary for each step
   - if defined MSYSTEM (%BASH% -lc "pacman -Suuy --noconfirm")
+  # download 3rd library
+  install:
+  #- ps: Start-FileDownload "https://github.com/libcheck/check/releases/download/0.11.0/check-0.11.0.tar.gz"
+  #- ps: Start-FileDownload "https://github.com/philsquared/Catch/releases/download/v1.8.1/catch.hpp"
+  - appveyor DownloadFile "https://github.com/libcheck/check/releases/download/0.11.0/check-0.11.0.tar.gz" -FileName C:\cygwin\check-0.11.0.tar.gz
+  - if defined BASH (%BASH% -lc "tar -xvf C:\cygwin\check-0.11.0.tar.gz -C C:\cygwin\")
+  - appveyor DownloadFile "https://github.com/philsquared/Catch/releases/download/v1.8.1/catch.hpp" -FileName C:\cygwin\catch.hpp
 
 build_script:
-  - if defined BASH (%BASH% -lc "cd $(cygpath ${APPVEYOR_BUILD_FOLDER}) && git submodule update --init && ./autogen.sh && ./configure CPPFLAGS=-I$(pwd)/deps/OpenCL-Headers/ && make DOCUMENT_FOLDER=$env:DOCUMENT_FOLDER install check")
+  - if defined BASH (%BASH% -lc "cd $(cygpath ${APPVEYOR_BUILD_FOLDER}) && git submodule update --init && ./autogen.sh && ./configure --enable-static --disable-shared CPPFLAGS=-IC:\cygwin\ && make DOCUMENT_FOLDER=$env:DOCUMENT_FOLDER install check")
+  - if defined BASH (%BASH% -lc "cd $(cygpath ${APPVEYOR_BUILD_FOLDER}) && git submodule update --init && ./autogen.sh && ./configure --enable-static --disable-shared --with-libcheck=C:\cygwin\check-0.11.0 && make DOCUMENT_FOLDER=$env:DOCUMENT_FOLDER install check")
 
 test_script:
   # some file globbing tests

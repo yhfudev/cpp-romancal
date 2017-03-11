@@ -14,7 +14,7 @@ install:
   - wget https://github.com/libcheck/check/releases/download/0.11.0/check-0.11.0.tar.gz
   - tar -xf check-0.11.0.tar.gz -C ${TRAVIS_BUILD_DIR}
   # Install 3rd unit test library -- catch.hpp
-  - wget -C ${TRAVIS_BUILD_DIR}/catch.hpp https://github.com/philsquared/Catch/releases/download/v1.8.1/catch.hpp
+  - wget -O ${TRAVIS_BUILD_DIR}/catch.hpp https://github.com/philsquared/Catch/releases/download/v1.8.1/catch.hpp
 script:
   - ./autogen.sh && ./configure --enable-static --disable-shared --enable-debug --with-libcheck=${TRAVIS_BUILD_DIR}/check-0.11.0/ CPPFLAGS=-I$(pwd)/include2/ && make install check
   - ./autogen.sh && ./configure --enable-static --disable-shared --enable-debug CPPFLAGS=-I${TRAVIS_BUILD_DIR} && make install check
