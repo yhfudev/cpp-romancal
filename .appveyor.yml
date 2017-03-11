@@ -40,8 +40,8 @@ install:
   # it is necessary to upgrade the MSYS base files and after that all the packages
   # the 2 separate commands/lines are required because a new shell is necessary for each step
   - if defined MSYSTEM (%BASH% -lc "pacman -Suuy --noconfirm")
+  #
   # download 3rd library
-  install:
   #- ps: Start-FileDownload "https://github.com/libcheck/check/releases/download/0.11.0/check-0.11.0.tar.gz"
   #- ps: Start-FileDownload "https://github.com/philsquared/Catch/releases/download/v1.8.1/catch.hpp"
   - appveyor DownloadFile "https://github.com/libcheck/check/releases/download/0.11.0/check-0.11.0.tar.gz" -FileName C:\cygwin\check-0.11.0.tar.gz
