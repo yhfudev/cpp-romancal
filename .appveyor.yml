@@ -49,8 +49,8 @@ install:
   - appveyor DownloadFile "https://github.com/philsquared/Catch/releases/download/v1.8.1/catch.hpp" -FileName C:\cygwin\catch.hpp
 
 build_script:
-  - if defined BASH (%BASH% -lc "cd $(cygpath ${APPVEYOR_BUILD_FOLDER}) && git submodule update --init && ./autogen.sh && ./configure --enable-static --disable-shared CPPFLAGS=-IC:\cygwin\ && make DOCUMENT_FOLDER=$env:DOCUMENT_FOLDER install check")
-  - if defined BASH (%BASH% -lc "cd $(cygpath ${APPVEYOR_BUILD_FOLDER}) && git submodule update --init && ./autogen.sh && ./configure --enable-static --disable-shared --with-libcheck=C:\cygwin\check-0.11.0 && make DOCUMENT_FOLDER=$env:DOCUMENT_FOLDER install check")
+  - if defined BASH (%BASH% -lc "cd $(cygpath ${APPVEYOR_BUILD_FOLDER}) && git submodule update --init && ./autogen.sh && ./configure --enable-static --disable-shared CPPFLAGS=-IC:\cygwin\ && make DOCUMENT_FOLDER=$env:DOCUMENT_FOLDER check")
+  - if defined BASH (%BASH% -lc "cd $(cygpath ${APPVEYOR_BUILD_FOLDER}) && git submodule update --init && ./autogen.sh && ./configure --enable-static --disable-shared --with-libcheck=C:\cygwin\check-0.11.0 && make DOCUMENT_FOLDER=$env:DOCUMENT_FOLDER check")
 
 test_script:
   # some file globbing tests
