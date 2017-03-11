@@ -50,8 +50,8 @@ install:
   - if defined BASH (%BASH% -lc "cd $(cygpath ${APPVEYOR_BUILD_FOLDER}) && wget -c 'https://github.com/philsquared/Catch/releases/download/v1.8.1/catch.hpp'")
 
 build_script:
-  - if defined BASH (%BASH% -lc "cd $(cygpath ${APPVEYOR_BUILD_FOLDER}) && git submodule update --init && ./autogen.sh && ./configure --enable-static --disable-shared CPPFLAGS=-I$(cygpath ${APPVEYOR_BUILD_FOLDER}) && make DOCUMENT_FOLDER=$$(cygpath ${DOCUMENT_FOLDER}) check")
-  - if defined BASH (%BASH% -lc "cd $(cygpath ${APPVEYOR_BUILD_FOLDER}) && git submodule update --init && ./autogen.sh && ./configure --enable-static --disable-shared --with-libcheck=$(cygpath ${APPVEYOR_BUILD_FOLDER})/check-0.11.0 && make DOCUMENT_FOLDER=$$(cygpath ${DOCUMENT_FOLDER}) check")
+  - if defined BASH (%BASH% -lc "cd $(cygpath ${APPVEYOR_BUILD_FOLDER}) && git submodule update --init && ./autogen.sh && ./configure --enable-static --disable-shared CPPFLAGS=-I$(cygpath ${APPVEYOR_BUILD_FOLDER}) && make DOCUMENT_FOLDER=$(cygpath ${DOCUMENT_FOLDER}) check")
+  - if defined BASH (%BASH% -lc "cd $(cygpath ${APPVEYOR_BUILD_FOLDER}) && git submodule update --init && ./autogen.sh && ./configure --enable-static --disable-shared --with-libcheck=$(cygpath ${APPVEYOR_BUILD_FOLDER})/check-0.11.0 && make DOCUMENT_FOLDER=$(cygpath ${DOCUMENT_FOLDER}) check")
 
 test_script:
   # some file globbing tests
