@@ -11,7 +11,7 @@ COMPILING
 
 Travis | Appveyor | Coverity
 ------ | -------- | --------
-[![romancal Travis Build status](https://travis-ci.org/yhfudev/cpp-romancal.svg?branch=master)](https://travis-ci.org/yhfudev/cpp-romancal) | [![romancal Appveyor Build status](https://ci.appveyor.com/api/projects/status/github/yhfudev/cpp-romancal?branch=master&svg=true)](https://ci.appveyor.com/project/yhfudev/cpp-romancal) | [![Coverity Scan Build Status](https://scan.coverity.com/projects/11753/badge.svg)](https://scan.coverity.com/projects/yhfudev-cpp-romancal)
+[![romancal Travis Build status](https://travis-ci.org/yhfudev/cpp-romancal.svg?branch=master)](https://travis-ci.org/yhfudev/cpp-romancal) | [![romancal Appveyor Build status](https://ci.appveyor.com/api/projects/status/github/yhfudev/cpp-romancal?branch=master&svg=true)](https://ci.appveyor.com/project/yhfudev/cpp-romancal) | [![Coverity Scan Build Status](https://scan.coverity.com/projects/12027/badge.svg)](https://scan.coverity.com/projects/yhfudev-cpp-romancal)
 
 You need to download the C unit test library [check](https://github.com/libcheck/check.git), or C++ unit test libary [catch](https://github.com/philsquared/Catch.git).
 
