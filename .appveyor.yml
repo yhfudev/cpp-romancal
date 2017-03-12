@@ -1,7 +1,7 @@
 environment:
   CYG_MIRROR: http://cygwin.mirror.constant.com
   CYG_PACKAGES: make,gcc-core
-  DOCUMENT_FOLDER: /share/doc/romancal
+  DOCUMENT_FOLDER: /usr/local/share/doc/romancal
   matrix:
     - CYG_ROOT: C:\cygwin64
       CYG_CACHE: C:\cygwin64\var\cache\setup
