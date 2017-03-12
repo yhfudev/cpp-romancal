@@ -1,6 +1,7 @@
 
 AM_LDFLAGS=
 AM_CFLAGS=
+AM_CPPFLAGS=
 EXTRA_DIST=
 
 if DEBUG
@@ -18,6 +19,8 @@ AM_CFLAGS+= \
     -I$(top_srcdir)/include/ \
     -I$(top_builddir)/include/ \
     $(NULL)
+
+AM_CPPFLAGS+= $(AM_CFLAGS)
 
 AM_LDFLAGS += \
     -L$(top_builddir)/src/ \
