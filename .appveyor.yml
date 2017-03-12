@@ -67,12 +67,12 @@ test_script:
 
       if ($LastExitCode -eq 0)
       {
-        throw "test failed"
+        throw "test failed. exit code 1: $LastExitCode"
       }
 
       & $env:APPVEYOR_BUILD_FOLDER/src/romancal.exe --show $env:DOCUMENT_FOLDER/ 3 + 5 | out-null
 
       if ($LastExitCode -ne 0)
       {
-        throw "test failed"
+        throw "test failed. exit code 2: $LastExitCode"
       }
