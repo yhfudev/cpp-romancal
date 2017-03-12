@@ -50,24 +50,24 @@ install:
   - if defined BASH (%BASH% -lc "cd $(cygpath ${APPVEYOR_BUILD_FOLDER}) && wget -c 'https://github.com/philsquared/Catch/releases/download/v1.8.1/catch.hpp'")
 
 build_script:
-  - if defined BASH (%BASH% -lc "cd $(cygpath ${APPVEYOR_BUILD_FOLDER}) && git submodule update --init && ./autogen.sh && ./configure --enable-static --disable-shared CPPFLAGS=-I$(cygpath ${APPVEYOR_BUILD_FOLDER}) && make DOCUMENT_FOLDER=$(cygpath ${DOCUMENT_FOLDER}) check")
-  - if defined BASH (%BASH% -lc "cd $(cygpath ${APPVEYOR_BUILD_FOLDER}) && git submodule update --init && ./autogen.sh && ./configure --enable-static --disable-shared --with-libcheck=$(cygpath ${APPVEYOR_BUILD_FOLDER})/check-0.11.0 && make DOCUMENT_FOLDER=$(cygpath ${DOCUMENT_FOLDER}) check")
+  - if defined BASH (%BASH% -lc "cd $(cygpath ${APPVEYOR_BUILD_FOLDER}) && git submodule update --init && ./autogen.sh && ./configure --enable-static --disable-shared CPPFLAGS=-I$(cygpath ${APPVEYOR_BUILD_FOLDER}) && make DOCUMENT_FOLDER=$(cygpath %DOCUMENT_FOLDER%) check")
+  - if defined BASH (%BASH% -lc "cd $(cygpath ${APPVEYOR_BUILD_FOLDER}) && git submodule update --init && ./autogen.sh && ./configure --enable-static --disable-shared --with-libcheck=$(cygpath ${APPVEYOR_BUILD_FOLDER})/check-0.11.0 && make DOCUMENT_FOLDER=$(cygpath %DOCUMENT_FOLDER%) check")
 
 test_script:
-  # some file globbing tests
-  #  1. hash file should not exist and therefore romancal should complain (if it does not there might be a problem)
-  #  2. hash file should expand to example0.hash and succeed
+  # some argument parse tests
+  #  1. non-supported operator and therefore romancal should complain (if it does not there might be a problem)
+  #  2. normal add operator and succeed
   - ps: >-
       if (Test-Path Env:\MSYSTEM)
       {
         mkdir $env:KERNEL_CACHE 2>&1 | out-null
       }
 
-      & $env:BASH -lc "$(cygpath ${APPVEYOR_BUILD_FOLDER})/src/romancal.exe --show $(cygpath %DOCUMENT_FOLDER%)/" 2>&1 | out-null
+      & $env:BASH -lc "$(cygpath %APPVEYOR_BUILD_FOLDER%)/src/romancal.exe --show $(cygpath %DOCUMENT_FOLDER%)/ 3 x 5s" 2>&1 | out-null
 
       if ($LastExitCode -eq 0)
       {
         throw "test failed"
       }
 
-      & $env:BASH -lc "$(cygpath ${APPVEYOR_BUILD_FOLDER})/src/romancal.exe --show $(cygpath %DOCUMENT_FOLDER%)/ 3 + 5"
+      & $env:BASH -lc "$(cygpath %APPVEYOR_BUILD_FOLDER%)/src/romancal.exe --show $(cygpath %DOCUMENT_FOLDER%)/ 3 + 5"
