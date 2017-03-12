@@ -65,4 +65,4 @@ endif
 
 testromancal_CFLAGS = $(AM_CFLAGS)
 testromancal_LDFLAGS = $(AM_LDFLAGS) $(LIBS)
-testromancal_LDADD = $(LIBCHECK_LIBS) $(LIBCOMPAT_LIBS) $(LIBS)
+testromancal_LDADD = $(LIBCHECK_LIBS) $(LIBCOMPAT_LIBS) $(LIBS) $(LIBPSAPI)

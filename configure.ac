@@ -25,6 +25,154 @@ AC_PROG_RANLIB
 # Checks for libraries.
 LT_INIT([shared static])
 
+
+app_link_all_option="-Wl,--whole-archive"
+app_no_link_all_option="-Wl,--no-whole-archive"
+app_platform_type="Unix"
+
+AC_CACHE_CHECK([type of operating system we're going to host on],
+               [app_os_type],
+[case $host in
+  *-*-aix*)
+    app_os_type="AIX"
+    ;;
+  *-*-irix*)
+    app_os_type="IRIX"
+    ;;
+  *-*-cygwin*)
+    app_os_type="Cygwin"
+    ;;
+  *-*-darwin*)
+    app_link_all_option="-Wl,-all_load"
+    app_no_link_all_option="-Wl,-noall_load"
+    app_os_type="Darwin"
+    ;;
+  *-*-minix*)
+    app_link_all_option="-Wl,-all_load"
+    app_no_link_all_option="-Wl,-noall_load"
+    app_os_type="Minix"
+    ;;
+  *-*-freebsd*)
+    app_os_type="FreeBSD"
+    ;;
+  *-*-kfreebsd-gnu)
+    app_os_type="GNU/kFreeBSD"
+    ;;
+  *-*-openbsd*)
+    app_os_type="OpenBSD"
+    ;;
+  *-*-netbsd*)
+    app_os_type="NetBSD"
+    ;;
+  *-*-dragonfly*)
+    app_os_type="DragonFly"
+    ;;
+  *-*-hpux*)
+    app_os_type="HP-UX"
+    ;;
+  *-*-interix*)
+    app_os_type="Interix"
+    ;;
+  *-*-linux*)
+    app_os_type="Linux"
+    ;;
+  *-*-gnu*)
+    app_os_type="GNU"
+    ;;
+  *-*-solaris*)
+    app_link_all_option="-Wl,-z,allextract"
+    app_no_link_all_option="-Wl,-z,defaultextract"
+    app_os_type="SunOS"
+    ;;
+  *-*-auroraux*)
+    app_link_all_option="-Wl,-z,allextract"
+    app_link_all_option="-Wl,-z,defaultextract"
+    app_os_type="AuroraUX"
+    ;;
+  *-*-win32*)
+    app_os_type="Win32"
+    app_platform_type="Win32"
+    ;;
+  *-*-mingw*)
+    app_os_type="MingW"
+    app_platform_type="Win32"
+    ;;
+  *-*-haiku*)
+    app_os_type="Haiku"
+    ;;
+  *-unknown-eabi*)
+    app_os_type="Freestanding"
+    ;;
+  *-unknown-elf*)
+    app_os_type="Freestanding"
+    ;;
+  *)
+    app_link_all_option=""
+    app_no_link_all_option=""
+    app_os_type="Unknown"
+    app_platform_type="Unknown"
+    ;;
+esac])
+
+AC_CACHE_CHECK([type of operating system we're going to target],
+               [app_target_os_type],
+[case $target in
+  *-*-aix*)
+    app_target_os_type="AIX" ;;
+  *-*-irix*)
+    app_target_os_type="IRIX" ;;
+  *-*-cygwin*)
+    app_target_os_type="Cygwin" ;;
+  *-*-darwin*)
+    app_target_os_type="Darwin" ;;
+  *-*-minix*)
+    app_target_os_type="Minix" ;;
+  *-*-freebsd*)
+    app_target_os_type="FreeBSD" ;;
+  *-*-kfreebsd-gnu)
+    app_target_os_type="GNU/kFreeBSD" ;;
+  *-*-openbsd*)
+    app_target_os_type="OpenBSD" ;;
+  *-*-netbsd*)
+    app_target_os_type="NetBSD" ;;
+  *-*-dragonfly*)
+    app_target_os_type="DragonFly" ;;
+  *-*-hpux*)
+    app_target_os_type="HP-UX" ;;
+  *-*-interix*)
+    app_target_os_type="Interix" ;;
+  *-*-linux*)
+    app_target_os_type="Linux" ;;
+  *-*-gnu*)
+    app_target_os_type="GNU" ;;
+  *-*-solaris*)
+    app_target_os_type="SunOS" ;;
+  *-*-auroraux*)
+    app_target_os_type="AuroraUX" ;;
+  *-*-win32*)
+    app_target_os_type="Win32" ;;
+  *-*-mingw*)
+    app_target_os_type="MingW" ;;
+  *-*-haiku*)
+    app_target_os_type="Haiku" ;;
+  *-*-rtems*)
+    app_target_os_type="RTEMS" ;;
+  *-*-nacl*)
+    app_target_os_type="NativeClient" ;;
+  *-unknown-eabi*)
+    app_target_os_type="Freestanding" ;;
+  *)
+    app_target_os_type="Unknown" ;;
+esac])
+
+if test "$app_os_type" = "MingW" ; then
+  AC_CHECK_HEADERS([windows.h psapi.h])
+  AC_CHECK_LIB(psapi, [GetProcessMemoryInfo], [LIBPSAPI=-lpsapi])
+  AC_SUBST(LIBPSAPI)
+  #AC_CHECK_LIB(shlwapi, PathIsDirectory, [LIBSHLWAPI=-lshlwapi])
+  #AC_SUBST(LIBSHLWAPI)
+fi
+
 AC_CHECK_LIB([m], [main])
 
 # FIXME: Replace `main' with a function in `-llibcompat':

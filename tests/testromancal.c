@@ -9,6 +9,12 @@
 
 #include <stdlib.h>
 
+#if defined (_WIN)
+// for test psapi
+#include <windows.h>
+#include <psapi.h>
+#endif // _WIN
+
 #include "testutils.h"
 #include "romancal.h"
 
@@ -229,4 +235,14 @@ ut_romadd_overflow(void)
     CI_ASSERT(-3 == roman_add("MMM", "MM", buf, 1));
 }
 
-
+/* Test linking win32 library psapi */
+void
+ut_link_win32_psapi(void)
+{
+    int len = 0;
+#if defined (_WIN)
+    char buf[200];
+    len = GetModuleFileName (NULL, buf, sizeof(buf));
+#endif
+    CI_ASSERT (len >= 0);
+}

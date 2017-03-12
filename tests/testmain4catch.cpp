@@ -51,3 +51,9 @@ TEST_CASE("Roman Number operations", "[rnOpera]")
     }
 }
 
+TEST_CASE("Link win32 psapi", "[psapi]")
+{
+    SECTION("call psapi"){
+        ut_link_win32_psapi();
+    }
+}

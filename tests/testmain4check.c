@@ -22,6 +22,8 @@ extern void ut_romsub_basic(void);
 extern void ut_romsub_overflow(void);
 extern void ut_romadd_overflow(void);
 
+extern void ut_link_win32_psapi(void);
+
 START_TEST (test_roman2value_basic)
 {
     ut_roman2value_basic();
@@ -144,6 +146,8 @@ main(void)
     int number_failed;
     Suite *s;
     SRunner *sr;
+
+    ut_link_win32_psapi();
 
     s = value2roman_suite();
     sr = srunner_create(s);
