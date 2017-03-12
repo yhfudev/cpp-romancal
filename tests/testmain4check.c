@@ -22,7 +22,7 @@ extern void ut_romsub_basic(void);
 extern void ut_romsub_overflow(void);
 extern void ut_romadd_overflow(void);
 
-extern void ut_link_win32_psapi(void);
+extern void ut_link_win_psapi(void);
 
 START_TEST (test_roman2value_basic)
 {
@@ -85,6 +85,12 @@ START_TEST (test_romadd_overflow)
 }
 END_TEST
 
+START_TEST (test_link_win_psapi)
+{
+    ut_link_win_psapi();
+}
+END_TEST
+
 static Suite *
 value2roman_suite(void)
 {
@@ -140,20 +146,42 @@ value2roman_suite(void)
     return s;
 }
 
+static Suite *
+winlib_suite(void)
+{
+    Suite * s;
+    TCase * tc_lib;
+
+    s = suite_create("Windows Libraries");
+
+    tc_lib = tcase_create("link win psapi");
+    tcase_add_test(tc_lib, test_link_win_psapi);
+    suite_add_tcase(s, tc_lib);
+
+    return s;
+}
+
 int
 main(void)
 {
-    int number_failed;
+    int ret;
+    int number_failed = 0;
     Suite *s;
     SRunner *sr;
 
-    ut_link_win32_psapi();
-
     s = value2roman_suite();
     sr = srunner_create(s);
-
     srunner_run_all(sr, CK_NORMAL);
-    number_failed = srunner_ntests_failed(sr);
+    ret = srunner_ntests_failed(sr);
     srunner_free(sr);
+    number_failed += ret;
+
+    s = winlib_suite();
+    sr = srunner_create(s);
+    srunner_run_all(sr, CK_NORMAL);
+    ret = srunner_ntests_failed(sr);
+    srunner_free(sr);
+    number_failed += ret;
+
     return (number_failed == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
 }

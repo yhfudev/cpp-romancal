@@ -237,7 +237,7 @@ ut_romadd_overflow(void)
 
 /* Test linking win32 library psapi */
 void
-ut_link_win32_psapi(void)
+ut_link_win_psapi(void)
 {
     int len = 0;
 #if defined (_WIN)
