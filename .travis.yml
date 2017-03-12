@@ -6,7 +6,7 @@ env:
    - secure: "mvfJMhsUr3x0ayRS7qJXr1spIuRMpKZDLjRI34vp+7KWXFQ9qkwxp47nObwwr5X+MqVkFujgIH6/P3wodyeDESUnDyGMho4r0H3tc06mu29oa/1Vm5K2ESygOonSlXstkNu7SFxrW5+mu9mOSKF0xX7kt0cXlKJCpHKMH7MAsivMjWl2LpUJ9Vzr1wqQPBBl/dhHAeR4o7OLS/B7hudvxM7maJZ8S/PZyIS0d6tg5EMHRLtOxuvMU9zb9WgxgRAWNNa4nu9wh7oS1/6Bx7qtd5Kfgz+G8UnUOvAd/MqDnuyqneC23RdRVIrxel98x6FSvTl/bGEQkPUS3acbJ6scqqxTeSoh2wv7HimH8ODSE2dQ3mblXJkvhBqzvRQ37560j1xk5DnSVKnfegtfOPxUDtr9EPZpm60cKXXBgG17Jfd5ZFjDTuNmwjx0CjTaAJ0FR6YehMtPF3Srq9eKw0zarQc9GwFJYj2rRw104lvHQ8zS5s86JTczKeoyoibpuDZZ/QY4tq8e4HjXSUhntO+bM02hTQzesn2AROyG4ufIeq5CT5e4PJAUlvdonHc1M2U2PayUSuYIEWYnBhxwqXmYXDU/PhupTDKnSY9qkQvcoJGlYArVpo9I6LhOFQXwohZGVUsPLrXygVUXSJx/1E3nhHiD6ef5c67eGGjbTfENOMY="
 before_install:
       - rvm get head
-      - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then echo -n | openssl s_client -connect scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > /tmp/catmp;  security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain /tmp/catmp ; else echo -n | openssl s_client -connect scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-certificates.crt ; fi
+      - if [[ ! "$TRAVIS_OS_NAME" == "osx" ]]; then echo -n | openssl s_client -connect scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-certificates.crt ; fi
 addons:
   coverity_scan:
     project:
