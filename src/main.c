@@ -66,6 +66,7 @@ main(int argc, char * argv[])
         usage(argv[0]);
         exit (1);
     }
+    ret = -1;
     memset(buf, 0, sizeof(buf));
     op = argv[optind + 1][0];
     switch (op) {
@@ -81,9 +82,8 @@ main(int argc, char * argv[])
     }
     if (ret < 0) {
         fprintf(stderr, "Error: in calculation!\n");
-    } else {
-        fprintf(stdout, "%s%s\n", show, buf);
+        return -1;
     }
+    fprintf(stdout, "%s%s\n", show, buf);
     return 0;
 }
-

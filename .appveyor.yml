@@ -63,11 +63,15 @@ test_script:
         mkdir $env:KERNEL_CACHE 2>&1 | out-null
       }
 
-      & $env:APPVEYOR_BUILD_FOLDER/src/romancal.exe --show $env:DOCUMENT_FOLDER/ 3 x 5
+      & $env:APPVEYOR_BUILD_FOLDER/src/romancal.exe --show $env:DOCUMENT_FOLDER/ 3 x 5 | out-null
 
       if ($LastExitCode -eq 0)
       {
         throw "test failed"
       }
 
-      & $env:APPVEYOR_BUILD_FOLDER/src/romancal.exe --show $env:DOCUMENT_FOLDER/ 3 + 5
+      & $env:APPVEYOR_BUILD_FOLDER/src/romancal.exe --show $env:DOCUMENT_FOLDER/ 3 + 5 | out-null
+      if (-not $LastExitCode -eq 0)
+      {
+        throw "test failed"
+      }
