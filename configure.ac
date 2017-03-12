@@ -12,6 +12,7 @@ MK=''; AC_SUBST(MK)
 SED=sed
 
 # Checks for programs.
+AM_PROG_AR
 AC_PROG_AWK
 AC_PROG_CC
 AC_PROG_CC_STDC

@@ -10,11 +10,12 @@ before_install:
 addons:
   coverity_scan:
     project:
-      name: "yhfudev/cpp-romancal"
+      name: $TRAVIS_REPO_SLUG
+      version: $TRAVIS_COMMIT
       description: "Build submitted via Travis CI"
     notification_email: yhfudev@gmail.com
     build_command_prepend: "./autogen.sh && ./configure --enable-static --disable-shared --enable-debug CPPFLAGS=-I${TRAVIS_BUILD_DIR} && make clean"
-    build_command:   "make -j 4"
+    build_command:   make -k
     branch_pattern: coverity_scan
 
 sudo: required
