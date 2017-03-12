@@ -17,5 +17,5 @@ install:
   - wget -O ${TRAVIS_BUILD_DIR}/catch.hpp https://github.com/philsquared/Catch/releases/download/v1.8.1/catch.hpp
 script:
   - (cd ${TRAVIS_BUILD_DIR}/check-0.11.0/ && make clean ; ./configure --enable-shared=no --enable-static=yes; make clean; make; cd -)
-  - ./autogen.sh && ./configure --enable-static --disable-shared --enable-debug --with-libcheck=${TRAVIS_BUILD_DIR}/check-0.11.0/ CPPFLAGS=-I${TRAVIS_BUILD_DIR}/include2/ && make check
-  - ./autogen.sh && ./configure --enable-static --disable-shared --enable-debug CPPFLAGS=-I${TRAVIS_BUILD_DIR} && make check
+  - ./autogen.sh && ./configure --enable-static --disable-shared --enable-debug --with-libcheck=${TRAVIS_BUILD_DIR}/check-0.11.0/ CPPFLAGS=-I${TRAVIS_BUILD_DIR}/include2/ && make && make check
+  - ./autogen.sh && ./configure --enable-static --disable-shared --enable-debug CPPFLAGS=-I${TRAVIS_BUILD_DIR} && make && make check
