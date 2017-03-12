@@ -82,9 +82,8 @@ main(int argc, char * argv[])
     }
     if (ret < 0) {
         fprintf(stderr, "Error: in calculation!\n");
-        exit(-1);
+        return -1;
     }
     fprintf(stdout, "%s%s\n", show, buf);
-    exit (0);
     return 0;
 }
