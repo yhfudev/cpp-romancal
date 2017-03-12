@@ -52,6 +52,8 @@ pkgconfig_DATA = libromancal.pc
 #$(top_builddir)/src/xmllex.c: $(top_srcdir)/src/xmllex.l $(top_srcdir)/src/xmldecl.h
 #	$(LEX) -o $@ $(top_srcdir)/src/xmllex.l
 
+DOCUMENT_FOLDER         ?= $(datadir)/doc/@PACKAGE@/
+
 
 lib_LTLIBRARIES=libromancal.la
 libromancal_la_SOURCES= \
@@ -66,7 +68,7 @@ romancal_SOURCES= \
 
 romancal_LDADD = -lm -lromancal
 
-romancal_CFLAGS = $(AM_CFLAGS)
+romancal_CFLAGS = $(AM_CFLAGS) -DDOCUMENT_FOLDER=\"$(DOCUMENT_FOLDER)\"
 romancal_LDFLAGS = $(AM_LDFLAGS)
 
 

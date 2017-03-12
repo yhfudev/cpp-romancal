@@ -63,11 +63,11 @@ test_script:
         mkdir $env:KERNEL_CACHE 2>&1 | out-null
       }
 
-      & $env:BASH -lc "$(cygpath %APPVEYOR_BUILD_FOLDER%)/src/romancal.exe --show $(cygpath %DOCUMENT_FOLDER%)/ 3 x 5s" 2>&1 | out-null
+      & $env:BASH -lc "$env:APPVEYOR_BUILD_FOLDER/src/romancal.exe --show $env:DOCUMENT_FOLDER/ 3 x 5s" 2>&1 | out-null
 
       if ($LastExitCode -eq 0)
       {
         throw "test failed"
       }
 
-      & $env:BASH -lc "$(cygpath %APPVEYOR_BUILD_FOLDER%)/src/romancal.exe --show $(cygpath %DOCUMENT_FOLDER%)/ 3 + 5"
+      & $env:BASH -lc "$env:APPVEYOR_BUILD_FOLDER/src/romancal.exe --show $env:DOCUMENT_FOLDER/ 3 + 5"
